@@ -1,29 +1,27 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "abdulmajeed-jamaan/filament-translatable-tabs",
+    "description": "Simplifying managing json based translation fields using tabs",
     "keywords": [
-        ":vendor_name",
+        "Abdulmajeed-Jamaan",
         "laravel",
-        ":package_slug"
+        "filament-translatable-tabs"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/abdulmajeed-jamaan/filament-translatable-tabs",
     "support": {
-        "issues": "https://github.com/:vendor_slug/:package_slug/issues",
-        "source": "https://github.com/:vendor_slug/:package_slug"
+        "issues": "https://github.com/abdulmajeed-jamaan/filament-translatable-tabs/issues",
+        "source": "https://github.com/abdulmajeed-jamaan/filament-translatable-tabs"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Abdulmajeed-Jamaan",
+            "email": "abdulmajeed.jamaan@outlook.com",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.1",
-        "filament/filament": "^3.0",
         "filament/forms": "^3.0",
-        "filament/tables": "^3.0",
         "spatie/laravel-package-tools": "^1.15.0"
     },
     "require-dev": {
@@ -36,18 +34,17 @@
         "pestphp/pest-plugin-laravel": "^2.0",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-deprecation-rules": "^1.0",
-        "phpstan/phpstan-phpunit": "^1.0",
-        "spatie/laravel-ray": "^1.26"
+        "phpstan/phpstan-phpunit": "^1.0"
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "AbdulmajeedJamaan\\FilamentTranslatableTabs\\": "src/",
+            "AbdulmajeedJamaan\\FilamentTranslatableTabs\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/"
+            "AbdulmajeedJamaan\\FilamentTranslatableTabs\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -67,10 +64,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "AbdulmajeedJamaan\\FilamentTranslatableTabs\\FilamentTranslatableTabsServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "FilamentTranslatableTabs": "AbdulmajeedJamaan\\FilamentTranslatableTabs\\Facades\\FilamentTranslatableTabs"
             }
         }
     },

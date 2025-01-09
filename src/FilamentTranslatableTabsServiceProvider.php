@@ -1,6 +1,6 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace AbdulmajeedJamaan\FilamentTranslatableTabs;
 
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
@@ -13,14 +13,14 @@ use Livewire\Features\SupportTesting\Testable;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use VendorName\Skeleton\Commands\SkeletonCommand;
-use VendorName\Skeleton\Testing\TestsSkeleton;
+use AbdulmajeedJamaan\FilamentTranslatableTabs\Commands\FilamentTranslatableTabsCommand;
+use AbdulmajeedJamaan\FilamentTranslatableTabs\Testing\TestsFilamentTranslatableTabs;
 
-class SkeletonServiceProvider extends PackageServiceProvider
+class FilamentTranslatableTabsServiceProvider extends PackageServiceProvider
 {
-    public static string $name = 'skeleton';
+    public static string $name = 'filament-translatable-tabs';
 
-    public static string $viewNamespace = 'skeleton';
+    public static string $viewNamespace = 'filament-translatable-tabs';
 
     public function configurePackage(Package $package): void
     {
@@ -36,7 +36,7 @@ class SkeletonServiceProvider extends PackageServiceProvider
                     ->publishConfigFile()
                     ->publishMigrations()
                     ->askToRunMigrations()
-                    ->askToStarRepoOnGitHub(':vendor_slug/:package_slug');
+                    ->askToStarRepoOnGitHub('abdulmajeed-jamaan/filament-translatable-tabs');
             });
 
         $configFileName = $package->shortName();
@@ -80,18 +80,18 @@ class SkeletonServiceProvider extends PackageServiceProvider
         if (app()->runningInConsole()) {
             foreach (app(Filesystem::class)->files(__DIR__ . '/../stubs/') as $file) {
                 $this->publishes([
-                    $file->getRealPath() => base_path("stubs/skeleton/{$file->getFilename()}"),
-                ], 'skeleton-stubs');
+                    $file->getRealPath() => base_path("stubs/filament-translatable-tabs/{$file->getFilename()}"),
+                ], 'filament-translatable-tabs-stubs');
             }
         }
 
         // Testing
-        Testable::mixin(new TestsSkeleton);
+        Testable::mixin(new TestsFilamentTranslatableTabs);
     }
 
     protected function getAssetPackageName(): ?string
     {
-        return ':vendor_slug/:package_slug';
+        return 'abdulmajeed-jamaan/filament-translatable-tabs';
     }
 
     /**
@@ -100,9 +100,9 @@ class SkeletonServiceProvider extends PackageServiceProvider
     protected function getAssets(): array
     {
         return [
-            // AlpineComponent::make('skeleton', __DIR__ . '/../resources/dist/components/skeleton.js'),
-            Css::make('skeleton-styles', __DIR__ . '/../resources/dist/skeleton.css'),
-            Js::make('skeleton-scripts', __DIR__ . '/../resources/dist/skeleton.js'),
+            // AlpineComponent::make('filament-translatable-tabs', __DIR__ . '/../resources/dist/components/filament-translatable-tabs.js'),
+            Css::make('filament-translatable-tabs-styles', __DIR__ . '/../resources/dist/filament-translatable-tabs.css'),
+            Js::make('filament-translatable-tabs-scripts', __DIR__ . '/../resources/dist/filament-translatable-tabs.js'),
         ];
     }
 
@@ -112,7 +112,7 @@ class SkeletonServiceProvider extends PackageServiceProvider
     protected function getCommands(): array
     {
         return [
-            SkeletonCommand::class,
+            FilamentTranslatableTabsCommand::class,
         ];
     }
 
@@ -146,7 +146,7 @@ class SkeletonServiceProvider extends PackageServiceProvider
     protected function getMigrations(): array
     {
         return [
-            'create_skeleton_table',
+            'create_filament-translatable-tabs_table',
         ];
     }
 }
