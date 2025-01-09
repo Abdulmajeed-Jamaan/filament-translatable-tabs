@@ -2,6 +2,8 @@
 
 namespace AbdulmajeedJamaan\FilamentTranslatableTabs;
 
+use AbdulmajeedJamaan\FilamentTranslatableTabs\Commands\FilamentTranslatableTabsCommand;
+use AbdulmajeedJamaan\FilamentTranslatableTabs\Testing\TestsFilamentTranslatableTabs;
 use Filament\Support\Assets\AlpineComponent;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Assets\Css;
@@ -13,8 +15,6 @@ use Livewire\Features\SupportTesting\Testable;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use AbdulmajeedJamaan\FilamentTranslatableTabs\Commands\FilamentTranslatableTabsCommand;
-use AbdulmajeedJamaan\FilamentTranslatableTabs\Testing\TestsFilamentTranslatableTabs;
 
 class FilamentTranslatableTabsServiceProvider extends PackageServiceProvider
 {
