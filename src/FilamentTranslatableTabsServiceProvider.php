@@ -2,7 +2,11 @@
 
 namespace AbdulmajeedJamaan\FilamentTranslatableTabs;
 
-use Filament\Support\Assets\AlpineComponent;
+use AbdulmajeedJamaan\FilamentTranslatableTabs\Commands\FilamentTranslatableTabsCommand;
+use AbdulmajeedJamaan\FilamentTranslatableTabs\Testing\TestsFilamentTranslatableTabs;
+use Closure;
+use Filament\Forms\Components\Field;
+use Filament\Forms\Components\TextInput;
 use Filament\Support\Assets\Asset;
 use Filament\Support\Assets\Css;
 use Filament\Support\Assets\Js;
@@ -13,8 +17,6 @@ use Livewire\Features\SupportTesting\Testable;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use AbdulmajeedJamaan\FilamentTranslatableTabs\Commands\FilamentTranslatableTabsCommand;
-use AbdulmajeedJamaan\FilamentTranslatableTabs\Testing\TestsFilamentTranslatableTabs;
 
 class FilamentTranslatableTabsServiceProvider extends PackageServiceProvider
 {
@@ -33,60 +35,30 @@ class FilamentTranslatableTabsServiceProvider extends PackageServiceProvider
             ->hasCommands($this->getCommands())
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
-                    ->publishConfigFile()
-                    ->publishMigrations()
-                    ->askToRunMigrations()
                     ->askToStarRepoOnGitHub('abdulmajeed-jamaan/filament-translatable-tabs');
             });
-
-        $configFileName = $package->shortName();
-
-        if (file_exists($package->basePath("/../config/{$configFileName}.php"))) {
-            $package->hasConfigFile();
-        }
-
-        if (file_exists($package->basePath('/../database/migrations'))) {
-            $package->hasMigrations($this->getMigrations());
-        }
-
-        if (file_exists($package->basePath('/../resources/lang'))) {
-            $package->hasTranslations();
-        }
-
-        if (file_exists($package->basePath('/../resources/views'))) {
-            $package->hasViews(static::$viewNamespace);
-        }
     }
 
-    public function packageRegistered(): void {}
+    public function packageRegistered(): void
+    {
+    }
 
     public function packageBooted(): void
     {
-        // Asset Registration
-        FilamentAsset::register(
-            $this->getAssets(),
-            $this->getAssetPackageName()
-        );
-
-        FilamentAsset::registerScriptData(
-            $this->getScriptData(),
-            $this->getAssetPackageName()
-        );
-
-        // Icon Registration
-        FilamentIcon::register($this->getIcons());
-
-        // Handle Stubs
-        if (app()->runningInConsole()) {
-            foreach (app(Filesystem::class)->files(__DIR__ . '/../stubs/') as $file) {
-                $this->publishes([
-                    $file->getRealPath() => base_path("stubs/filament-translatable-tabs/{$file->getFilename()}"),
-                ], 'filament-translatable-tabs-stubs');
-            }
-        }
-
-        // Testing
-        Testable::mixin(new TestsFilamentTranslatableTabs);
+        Field::macro('translatableTabs', function (
+            Closure|array|null $locales = null,
+            ?Closure           $modifyTabsUsing = null,
+            ?Closure           $modifyFieldsUsing = null
+        ) {
+            /**
+             * @var Field $this
+             */
+            return TranslatableTabs::make($this->getLabel())
+                ->locales($locales)
+                ->modifyTabsUsing($modifyTabsUsing)
+                ->modifyFieldsUsing($modifyFieldsUsing)
+                ->schema([$this]);
+        });
     }
 
     protected function getAssetPackageName(): ?string
@@ -99,11 +71,7 @@ class FilamentTranslatableTabsServiceProvider extends PackageServiceProvider
      */
     protected function getAssets(): array
     {
-        return [
-            // AlpineComponent::make('filament-translatable-tabs', __DIR__ . '/../resources/dist/components/filament-translatable-tabs.js'),
-            Css::make('filament-translatable-tabs-styles', __DIR__ . '/../resources/dist/filament-translatable-tabs.css'),
-            Js::make('filament-translatable-tabs-scripts', __DIR__ . '/../resources/dist/filament-translatable-tabs.js'),
-        ];
+        return [];
     }
 
     /**
@@ -111,9 +79,7 @@ class FilamentTranslatableTabsServiceProvider extends PackageServiceProvider
      */
     protected function getCommands(): array
     {
-        return [
-            FilamentTranslatableTabsCommand::class,
-        ];
+        return [];
     }
 
     /**
@@ -145,8 +111,6 @@ class FilamentTranslatableTabsServiceProvider extends PackageServiceProvider
      */
     protected function getMigrations(): array
     {
-        return [
-            'create_filament-translatable-tabs_table',
-        ];
+        return [];
     }
 }

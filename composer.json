@@ -1,9 +1,10 @@
 {
     "name": "abdulmajeed-jamaan/filament-translatable-tabs",
-    "description": "Simplifying managing json based translation fields using tabs",
     "keywords": [
         "Abdulmajeed-Jamaan",
         "laravel",
+        "filament",
+        "translation",
         "filament-translatable-tabs"
     ],
     "homepage": "https://github.com/abdulmajeed-jamaan/filament-translatable-tabs",
@@ -67,7 +68,7 @@
                 "AbdulmajeedJamaan\\FilamentTranslatableTabs\\FilamentTranslatableTabsServiceProvider"
             ],
             "aliases": {
-                "FilamentTranslatableTabs": "AbdulmajeedJamaan\\FilamentTranslatableTabs\\Facades\\FilamentTranslatableTabs"
+                "FilamentTranslatableTabs": "TranslatableTabs"
             }
         }
     },
