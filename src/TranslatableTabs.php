@@ -33,7 +33,7 @@ class TranslatableTabs extends Tabs
     protected ?Closure $modifyFieldsUsing = null;
 
     /**
-     * @param  array<string, string>|Closure(): array<string, string>  $locales
+     * @param  array<string, string>|Closure(): array<string, string>  $localesLabels
      */
     public static function configureLocalesLabelsUsing(array | Closure $localesLabels): void
     {
