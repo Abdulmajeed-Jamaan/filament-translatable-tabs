@@ -146,10 +146,9 @@ class TranslatableTabs extends Tabs
                 $fields[] = $field;
             }
 
-            $tab = Tabs\Tab::make($label)
+            $tab = TranslatableTab::make($label)
+                ->locale($locale)
                 ->schema($fields);
-
-            $tab->locale = $locale;
 
             $tabs[] = $tab;
         }
@@ -161,13 +160,17 @@ class TranslatableTabs extends Tabs
     {
         $componentContainer = parent::getChildComponentContainer($key);
 
+        /**
+         * @var TranslatableTab $tab
+         */
         foreach ($componentContainer->getComponents() as $tab) {
-            $locale = $tab->locale;
+            $this->handleModifyTabsUsing($tab, $tab->getLocale());
 
-            $this->handleModifyTabsUsing($tab, $locale);
-
+            /**
+             * @var Field $field
+             */
             foreach ($tab->getChildComponentContainer()->getComponents() as $field) {
-                $this->handleModifyFieldsUsing($field, $locale);
+                $this->handleModifyFieldsUsing($field, $tab->getLocale());
             }
         }
 
