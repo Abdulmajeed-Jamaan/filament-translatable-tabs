@@ -90,11 +90,11 @@ class TranslatableTabs extends Tabs
     public function handleModifyTabsUsing(Tabs\Tab $tab, $locale): void
     {
         if (static::$configureTabsUsing) {
-            $this->evaluate(static::$configureTabsUsing, ['tab' => $tab, 'locale' => $locale]);
+            $this->evaluate(static::$configureTabsUsing, ['component' => $tab, 'locale' => $locale]);
         }
 
         if ($this->modifyTabsUsing) {
-            $this->evaluate($this->modifyTabsUsing, ['tab' => $tab, 'locale' => $locale]);
+            $this->evaluate($this->modifyTabsUsing, ['component' => $tab, 'locale' => $locale]);
         }
     }
 
@@ -113,11 +113,11 @@ class TranslatableTabs extends Tabs
     public function handleModifyFieldsUsing(Field $field, string $locale): void
     {
         if (static::$configureFieldsUsing) {
-            $this->evaluate(static::$configureFieldsUsing, ['field' => $field, 'locale' => $locale]);
+            $this->evaluate(static::$configureFieldsUsing, ['component' => $field, 'locale' => $locale]);
         }
 
         if ($this->modifyFieldsUsing) {
-            $this->evaluate($this->modifyFieldsUsing, ['field' => $field, 'locale' => $locale]);
+            $this->evaluate($this->modifyFieldsUsing, ['component' => $field, 'locale' => $locale]);
         }
     }
 
