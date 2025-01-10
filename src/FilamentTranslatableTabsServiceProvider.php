@@ -2,18 +2,9 @@
 
 namespace AbdulmajeedJamaan\FilamentTranslatableTabs;
 
-use AbdulmajeedJamaan\FilamentTranslatableTabs\Commands\FilamentTranslatableTabsCommand;
-use AbdulmajeedJamaan\FilamentTranslatableTabs\Testing\TestsFilamentTranslatableTabs;
 use Closure;
 use Filament\Forms\Components\Field;
-use Filament\Forms\Components\TextInput;
 use Filament\Support\Assets\Asset;
-use Filament\Support\Assets\Css;
-use Filament\Support\Assets\Js;
-use Filament\Support\Facades\FilamentAsset;
-use Filament\Support\Facades\FilamentIcon;
-use Illuminate\Filesystem\Filesystem;
-use Livewire\Features\SupportTesting\Testable;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -39,16 +30,14 @@ class FilamentTranslatableTabsServiceProvider extends PackageServiceProvider
             });
     }
 
-    public function packageRegistered(): void
-    {
-    }
+    public function packageRegistered(): void {}
 
     public function packageBooted(): void
     {
         Field::macro('translatableTabs', function (
-            Closure|array|null $locales = null,
-            ?Closure           $modifyTabsUsing = null,
-            ?Closure           $modifyFieldsUsing = null
+            Closure | array | null $locales = null,
+            ?Closure $modifyTabsUsing = null,
+            ?Closure $modifyFieldsUsing = null
         ) {
             /**
              * @var Field $this

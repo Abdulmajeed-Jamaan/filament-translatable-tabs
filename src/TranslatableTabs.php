@@ -12,17 +12,17 @@ class TranslatableTabs extends Tabs
     /**
      * @var array<string, string>|Closure(): array<string, string>|null
      */
-    protected static array|Closure|null $configureLocalesLabelsUsing = null;
+    protected static array | Closure | null $configureLocalesLabelsUsing = null;
 
     /**
      * @var array<string|int, string>|Closure(): array<string|int, string>|null
      */
-    protected static array|Closure|null $configureLocalesUsing = null;
+    protected static array | Closure | null $configureLocalesUsing = null;
 
     /**
      * @var array<string|int, string>|Closure(): array<string|int, string>|null
      */
-    protected array|Closure|null $locales = null;
+    protected array | Closure | null $locales = null;
 
     protected static ?Closure $configureTabsUsing = null;
 
@@ -33,26 +33,26 @@ class TranslatableTabs extends Tabs
     protected ?Closure $modifyFieldsUsing = null;
 
     /**
-     * @param array<string, string>|Closure(): array<string, string> $locales
+     * @param  array<string, string>|Closure(): array<string, string>  $locales
      */
-    public static function configureLocalesLabelsUsing(array|Closure $localesLabels): void
+    public static function configureLocalesLabelsUsing(array | Closure $localesLabels): void
     {
         static::$configureLocalesLabelsUsing = $localesLabels;
     }
 
     /**
-     * @param array<string|int, string>|Closure(): array<string|int, string> $locales
+     * @param  array<string|int, string>|Closure(): array<string|int, string>  $locales
      */
-    public static function configureLocalesUsing(array|Closure $locales): void
+    public static function configureLocalesUsing(array | Closure $locales): void
     {
         static::$configureLocalesUsing = $locales;
     }
 
     /**
-     * @param array<string|int, string>|Closure(): array<string|int, string> $locales
+     * @param  array<string|int, string>|Closure(): array<string|int, string>  $locales
      * @return $this
      */
-    public function locales(array|Closure|null $locales): static
+    public function locales(array | Closure | null $locales): static
     {
         $this->locales = $locales;
 
@@ -67,7 +67,8 @@ class TranslatableTabs extends Tabs
         $localeLabels = $this->evaluate(static::$configureLocalesLabelsUsing);
 
         return collect($this->evaluate($this->locales) ?: $this->evaluate(static::$configureLocalesUsing))
-            ->mapWithKeys(fn($label, $locale) => is_int($locale)
+            ->mapWithKeys(
+                fn ($label, $locale) => is_int($locale)
                 ? [$label => $localeLabels[$label]]
                 : [$locale => $label]
             )
