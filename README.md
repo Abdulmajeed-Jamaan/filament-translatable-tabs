@@ -9,9 +9,7 @@ Simplifying managing json based translation columns using tabs while allowing fu
 
 Can work standalone, but highly recommended using it with [spatie/laravel-translatable](https://github.com/spatie/laravel-translatable).
 
-## Preview
-
-[Single Field Demo](./art/videos/single-field-preview.mov)
+![Preview](./art/preview.gif)
 
 ## Installation
 
