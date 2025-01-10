@@ -161,12 +161,12 @@ class TranslatableTabs extends Tabs
     {
         $componentContainer = parent::getChildComponentContainer($key);
 
-        foreach ($componentContainer->getComponents() as $tab){
+        foreach ($componentContainer->getComponents() as $tab) {
             $locale = $tab->locale;
 
             $this->handleModifyTabsUsing($tab, $locale);
 
-            foreach ($tab->getChildComponentContainer()->getComponents() as $field){
+            foreach ($tab->getChildComponentContainer()->getComponents() as $field) {
                 $this->handleModifyFieldsUsing($field, $locale);
             }
         }
