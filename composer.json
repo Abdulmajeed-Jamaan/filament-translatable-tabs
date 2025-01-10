@@ -40,8 +40,7 @@
     },
     "autoload": {
         "psr-4": {
-            "AbdulmajeedJamaan\\FilamentTranslatableTabs\\": "src/",
-            "AbdulmajeedJamaan\\FilamentTranslatableTabs\\Database\\Factories\\": "database/factories/"
+            "AbdulmajeedJamaan\\FilamentTranslatableTabs\\": "src/"
         }
     },
     "autoload-dev": {
@@ -69,7 +68,7 @@
                 "AbdulmajeedJamaan\\FilamentTranslatableTabs\\FilamentTranslatableTabsServiceProvider"
             ],
             "aliases": {
-                "FilamentTranslatableTabs": "TranslatableTabs"
+
             }
         }
     },

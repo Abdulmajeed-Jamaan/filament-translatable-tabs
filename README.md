@@ -1,13 +1,17 @@
-# Simplifying managing json based translation columns using tabs
+# Filament Translatable Tabs
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/abdulmajeed-jamaan/filament-translatable-tabs.svg?style=flat-square)](https://packagist.org/packages/abdulmajeed-jamaan/filament-translatable-tabs)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/abdulmajeed-jamaan/filament-translatable-tabs/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/abdulmajeed-jamaan/filament-translatable-tabs/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/abdulmajeed-jamaan/filament-translatable-tabs/fix-php-code-styling.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/abdulmajeed-jamaan/filament-translatable-tabs/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/abdulmajeed-jamaan/filament-translatable-tabs.svg?style=flat-square)](https://packagist.org/packages/abdulmajeed-jamaan/filament-translatable-tabs)
 
+Simplifying managing json based translation columns using tabs while allowing full customizability.
 
+Can work standalone, but highly recommended using it with [spatie/laravel-translatable](https://github.com/spatie/laravel-translatable).
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+## Preview
+
+[Single Field Demo](./art/videos/single-field-preview.mov)
 
 ## Installation
 
@@ -17,44 +21,145 @@ You can install the package via composer:
 composer require abdulmajeed-jamaan/filament-translatable-tabs
 ```
 
-You can publish and run the migrations with:
+Then in any registered service provider `boot()` method configure the following:
 
-```bash
-php artisan vendor:publish --tag="filament-translatable-tabs-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag="filament-translatable-tabs-config"
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="filament-translatable-tabs-views"
-```
-
-This is the contents of the published config file:
+Configure default locales labels:
 
 ```php
-return [
-];
+use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
+
+TranslatableTabs::configureLocalesLabelsUsing([
+    'ar' => 'Arabic',
+    'en' => 'English'
+    // It's better to have a locale file then use it like: 'ar' => __('localeFile.ar')
+]);
+```
+
+Configure default locales:
+
+```php
+use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
+
+TranslatableTabs::configureLocalesUsing([
+    'ar' ,
+    'en' 
+]);
 ```
 
 ## Usage
 
+### Single Field
+
 ```php
-$filamentTranslatableTabs = new AbdulmajeedJamaan\FilamentTranslatableTabs();
-echo $filamentTranslatableTabs->echoPhrase('Hello, AbdulmajeedJamaan!');
+use Filament\Forms\Components\TextInput;
+
+TextInput::make('title')
+    ->translatableTabs();
 ```
 
-## Testing
+### Multiple Fields
 
-```bash
-composer test
+```php
+use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
+
+TranslatableTabs::make('anyLabel')
+    ->schema([
+        Forms\Components\TextInput::make("title"),
+        Forms\Components\Textarea::make("content")
+    ]);
 ```
+
+### Configurations (optionally)
+
+#### Default
+
+In any registered service provider `boot()` method optionally configure the following:
+
+```php
+use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
+use Filament\Forms\Components\Tabs\Tab;
+use Filament\Forms\Components\Field;
+
+TranslatableTabs::configureUsing(function (TranslatableTabs $component){
+    // ...
+});
+
+TranslatableTabs::configureTabsUsing(function (Tab $component, $locale){
+    // ...
+});
+
+TranslatableTabs::configureFieldsUsing(function (Field $component, $locale){
+    // ...
+});
+```
+
+#### Override the defaults:
+
+```php
+use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
+use Filament\Forms\Components\Field;
+use Filament\Forms\Components\Tabs\Tab;
+use Filament\Forms\Components\TextInput;
+
+// Single Field
+TextInput::make()
+    ->translatableTabs(
+        locales: function () {
+            // you can override labels using : ['ar' => 'Arabic']
+            return ['ar', 'en']
+        },
+        modifyTabsUsing: function (Tab $component, $locale){
+            // ...
+        },
+        modifyFieldsUsing: function (Field $component, $locale){
+            // ...
+        } 
+    )
+
+// Multiple Fields
+TranslatableTabs::make('anyLabel')
+    ->locales(function () {
+        // you can override labels using : ['ar' => 'Arabic']
+        return ['ar', 'en']
+    })
+    ->modifyTabsUsing(function (Tab $component, $locale){
+        // ...
+    })
+    ->modifyFieldsUsing(function (Field $component, $locale){
+        // ...
+    })
+```
+
+### Suggested configurations
+
+In order to have similar experience to the [preview](#preview) set the following:
+
+```php
+use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
+use Filament\Forms\Components\Field;
+use Filament\Forms\Components\Tabs\Tab;
+
+
+TranslatableTabs::configureTabsUsing(function (Tab $component) {
+    $hasValue = fn ($tab, $get): bool => collect($tab->getChildComponents())
+        ->contains(fn($c) => !empty($get($c->getName())));
+
+    $component
+        ->live(onBlur: true)
+        ->badgeColor(function ($component, $get) use($hasValue) {
+            return $hasValue($component, $get) ? 'primary' : 'warning';
+        })
+        ->badge(function ($component, $get) use($hasValue) {
+            return $hasValue($component, $get) ? null : 'empty';
+        }));
+});
+
+TranslatableTabs::configureFieldsUsing(function (Field $component, $locale) {
+    $direction = str($locale)->startsWith('ar') ? 'rtl' : 'ltr'; 
+    $component->extraAttributes(['style' => "direction: $direction;"], merge: true);
+});
+```
+
 
 ## Changelog
 
