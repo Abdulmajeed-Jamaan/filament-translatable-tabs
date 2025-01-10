@@ -7,7 +7,7 @@
 
 Simplifying managing json based translation columns using tabs while allowing full customizability.
 
-Can work standalone, but highly recommended using it with [spatie/laravel-translatable](https://github.com/spatie/laravel-translatable).
+This was created to be used with [spatie/laravel-translatable](https://github.com/spatie/laravel-translatable), but it can be used standalone as well.
 
 ![Preview](./art/preview.gif)
 
