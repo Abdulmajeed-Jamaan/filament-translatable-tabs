@@ -130,7 +130,7 @@ TranslatableTabs::make('anyLabel')
 
 ### Suggested configurations
 
-In order to have similar experience to the [preview](#preview) set the following:
+In order to have similar experience to the [preview](#) set the following:
 
 ```php
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
