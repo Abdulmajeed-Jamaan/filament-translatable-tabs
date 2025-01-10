@@ -3,6 +3,7 @@
 namespace AbdulmajeedJamaan\FilamentTranslatableTabs;
 
 use Closure;
+use Filament\Forms\ComponentContainer;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\Tabs;
@@ -90,11 +91,11 @@ class TranslatableTabs extends Tabs
     public function handleModifyTabsUsing(Tabs\Tab $tab, $locale): void
     {
         if (static::$configureTabsUsing) {
-            $this->evaluate(static::$configureTabsUsing, ['component' => $tab, 'locale' => $locale]);
+            $tab->evaluate(static::$configureTabsUsing, ['locale' => $locale]);
         }
 
         if ($this->modifyTabsUsing) {
-            $this->evaluate($this->modifyTabsUsing, ['component' => $tab, 'locale' => $locale]);
+            $tab->evaluate($this->modifyTabsUsing, ['locale' => $locale]);
         }
     }
 
@@ -113,11 +114,11 @@ class TranslatableTabs extends Tabs
     public function handleModifyFieldsUsing(Field $field, string $locale): void
     {
         if (static::$configureFieldsUsing) {
-            $this->evaluate(static::$configureFieldsUsing, ['component' => $field, 'locale' => $locale]);
+            $field->evaluate(static::$configureFieldsUsing, ['locale' => $locale]);
         }
 
         if ($this->modifyFieldsUsing) {
-            $this->evaluate($this->modifyFieldsUsing, ['component' => $field, 'locale' => $locale]);
+            $field->evaluate($this->modifyFieldsUsing, ['locale' => $locale]);
         }
     }
 
@@ -142,20 +143,34 @@ class TranslatableTabs extends Tabs
                     ->name("{$component->getName()}.$locale")
                     ->statePath("{$component->getStatePath(false)}.$locale");
 
-                $this->handleModifyFieldsUsing($field, $locale);
-
                 $fields[] = $field;
             }
 
-            $tab = Tabs\Tab::make($locale)
-                ->label($label)
+            $tab = Tabs\Tab::make($label)
                 ->schema($fields);
 
-            $this->handleModifyTabsUsing($tab, $locale);
+            $tab->locale = $locale;
 
             $tabs[] = $tab;
         }
 
         return $tabs;
+    }
+
+    public function getChildComponentContainer($key = null): ComponentContainer
+    {
+        $componentContainer = parent::getChildComponentContainer($key);
+
+        foreach ($componentContainer->getComponents() as $tab){
+            $locale = $tab->locale;
+
+            $this->handleModifyTabsUsing($tab, $locale);
+
+            foreach ($tab->getChildComponentContainer()->getComponents() as $field){
+                $this->handleModifyFieldsUsing($field, $locale);
+            }
+        }
+
+        return $componentContainer;
     }
 }
