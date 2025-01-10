@@ -29,7 +29,7 @@ use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
 TranslatableTabs::configureLocalesLabelsUsing([
     'ar' => 'Arabic',
     'en' => 'English'
-    // It's better to have a locale file then use it like: 'ar' => __('localeFile.ar')
+    // It's better to have a locale file: 'ar' => __('localeFile.ar')
 ]);
 ```
 
