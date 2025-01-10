@@ -1,4 +1,4 @@
-# Simplifying managing json based translation fields using tabs
+# Simplifying managing json based translation columns using tabs
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/abdulmajeed-jamaan/filament-translatable-tabs.svg?style=flat-square)](https://packagist.org/packages/abdulmajeed-jamaan/filament-translatable-tabs)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/abdulmajeed-jamaan/filament-translatable-tabs/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/abdulmajeed-jamaan/filament-translatable-tabs/actions?query=workflow%3Arun-tests+branch%3Amain)

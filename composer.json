@@ -1,6 +1,6 @@
 {
     "name": "abdulmajeed-jamaan/filament-translatable-tabs",
-    "description": "Simplifying managing json based translation fields using tabs",
+    "description": "Simplifying managing json based translation columns using tabs",
     "keywords": [
         "Abdulmajeed-Jamaan",
         "laravel",
