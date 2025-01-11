@@ -5,7 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/abdulmajeed-jamaan/filament-translatable-tabs/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/abdulmajeed-jamaan/filament-translatable-tabs/actions?query=workflow%3A"fix+php+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/abdulmajeed-jamaan/filament-translatable-tabs.svg?style=flat-square)](https://packagist.org/packages/abdulmajeed-jamaan/filament-translatable-tabs)
 
-Simplifying managing json based translation columns using tabs while allowing full customizability.
+Automatically generate tabs component for translations.
 
 This was created to be used with [spatie/laravel-translatable](https://github.com/spatie/laravel-translatable), but it can be used standalone as well.
 
