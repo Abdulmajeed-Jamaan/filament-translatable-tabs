@@ -11,6 +11,8 @@ use http\Exception\RuntimeException;
 
 class TranslatableTabs extends Tabs
 {
+    use HasExtraConfigs;
+
     /**
      * @var array<string, string>|Closure(): array<string, string>
      */
