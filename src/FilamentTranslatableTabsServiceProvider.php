@@ -43,9 +43,9 @@ class FilamentTranslatableTabsServiceProvider extends PackageServiceProvider
              * @var Field $this
              */
             return TranslatableTabs::make($this->getLabel())
-                ->locales($locales)
-                ->modifyTabsUsing($modifyTabsUsing)
-                ->modifyFieldsUsing($modifyFieldsUsing)
+                ->when(! is_null($locales), fn (TranslatableTabs $tabs) => $tabs->locales($locales))
+                ->when(! is_null($modifyTabsUsing), fn (TranslatableTabs $tabs) => $tabs->modifyTabsUsing($modifyTabsUsing))
+                ->when(! is_null($modifyFieldsUsing), fn (TranslatableTabs $tabs) => $tabs->modifyFieldsUsing($modifyFieldsUsing))
                 ->schema([$this]);
         });
     }

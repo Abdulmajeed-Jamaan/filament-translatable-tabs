@@ -7,53 +7,45 @@ use Filament\Forms\ComponentContainer;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\Tabs;
+use http\Exception\RuntimeException;
 
 class TranslatableTabs extends Tabs
 {
     /**
-     * @var array<string, string>|Closure(): array<string, string>|null
+     * @var array<string, string>|Closure(): array<string, string>
      */
-    protected static array | Closure | null $configureLocalesLabelsUsing = null;
+    protected array | Closure $localeLabels;
 
     /**
-     * @var array<string|int, string>|Closure(): array<string|int, string>|null
+     * @var array<string|int, string>|Closure(): array<string|int, string>
      */
-    protected static array | Closure | null $configureLocalesUsing = null;
+    protected array | Closure $locales;
 
     /**
-     * @var array<string|int, string>|Closure(): array<string|int, string>|null
+     * @var array<Closure>
      */
-    protected array | Closure | null $locales = null;
+    protected array $modifyTabsUsing = [];
 
-    protected static ?Closure $configureTabsUsing = null;
-
-    protected ?Closure $modifyTabsUsing = null;
-
-    protected static ?Closure $configureFieldsUsing = null;
-
-    protected ?Closure $modifyFieldsUsing = null;
+    /**
+     * @var array<Closure>
+     */
+    protected array $modifyFieldsUsing = [];
 
     /**
      * @param  array<string, string>|Closure(): array<string, string>  $localesLabels
      */
-    public static function configureLocalesLabelsUsing(array | Closure $localesLabels): void
+    public function localesLabels(array | Closure $localesLabels): static
     {
-        static::$configureLocalesLabelsUsing = $localesLabels;
-    }
+        $this->localeLabels = $localesLabels;
 
-    /**
-     * @param  array<string|int, string>|Closure(): array<string|int, string>  $locales
-     */
-    public static function configureLocalesUsing(array | Closure $locales): void
-    {
-        static::$configureLocalesUsing = $locales;
+        return $this;
     }
 
     /**
      * @param  array<string|int, string>|Closure(): array<string|int, string>  $locales
      * @return $this
      */
-    public function locales(array | Closure | null $locales): static
+    public function locales(array | Closure $locales): static
     {
         $this->locales = $locales;
 
@@ -65,9 +57,9 @@ class TranslatableTabs extends Tabs
      */
     public function getLocales(): array
     {
-        $localeLabels = $this->evaluate(static::$configureLocalesLabelsUsing);
+        $localeLabels = $this->evaluate($this->localeLabels);
 
-        return collect($this->evaluate($this->locales) ?: $this->evaluate(static::$configureLocalesUsing))
+        return collect($this->evaluate($this->locales))
             ->mapWithKeys(
                 fn ($label, $locale) => is_int($locale)
                 ? [$label => $localeLabels[$label]]
@@ -76,49 +68,39 @@ class TranslatableTabs extends Tabs
             ->toArray();
     }
 
-    public static function configureTabsUsing(?Closure $closure): void
+    public function modifyTabsUsing(Closure $closure, bool $merge = true): static
     {
-        static::$configureTabsUsing = $closure;
-    }
-
-    public function modifyTabsUsing(?Closure $closure): static
-    {
-        $this->modifyTabsUsing = $closure;
+        if ($merge) {
+            $this->modifyTabsUsing[] = $closure;
+        } else {
+            $this->modifyTabsUsing = [$closure];
+        }
 
         return $this;
     }
 
-    public function handleModifyTabsUsing(Tabs\Tab $tab, $locale): void
+    public function modifyFieldsUsing(Closure $closure, bool $merge = true): static
     {
-        if (static::$configureTabsUsing) {
-            $tab->evaluate(static::$configureTabsUsing, ['locale' => $locale]);
+        if ($merge) {
+            $this->modifyFieldsUsing[] = $closure;
+        } else {
+            $this->modifyFieldsUsing = [$closure];
         }
-
-        if ($this->modifyTabsUsing) {
-            $tab->evaluate($this->modifyTabsUsing, ['locale' => $locale]);
-        }
-    }
-
-    public static function configureFieldsUsing(?Closure $closure): void
-    {
-        static::$configureFieldsUsing = $closure;
-    }
-
-    public function modifyFieldsUsing(?Closure $closure): static
-    {
-        $this->modifyFieldsUsing = $closure;
 
         return $this;
     }
 
-    public function handleModifyFieldsUsing(Field $field, string $locale): void
+    public function handleModifyTabsUsing(TranslatableTab $tab): void
     {
-        if (static::$configureFieldsUsing) {
-            $field->evaluate(static::$configureFieldsUsing, ['locale' => $locale]);
+        foreach ($this->modifyTabsUsing as $closure) {
+            $tab->evaluate($closure, ['locale' => $tab->getLocale()]);
         }
+    }
 
-        if ($this->modifyFieldsUsing) {
-            $field->evaluate($this->modifyFieldsUsing, ['locale' => $locale]);
+    public function handleModifyFieldsUsing(TranslatableTab $tab, Field $field): void
+    {
+        foreach ($this->modifyFieldsUsing as $closure) {
+            $field->evaluate($closure, ['locale' => $tab->getLocale()]);
         }
     }
 
@@ -131,6 +113,10 @@ class TranslatableTabs extends Tabs
          * @var array<Field> $components
          */
         $components = parent::getChildComponents();
+
+        if (collect($components)->contains(fn ($component) => ! $component instanceof Field)) {
+            throw new RuntimeException('Only instances of type ' . Field::class . ' Supported');
+        }
 
         $tabs = [];
 
@@ -164,13 +150,13 @@ class TranslatableTabs extends Tabs
          * @var TranslatableTab $tab
          */
         foreach ($componentContainer->getComponents() as $tab) {
-            $this->handleModifyTabsUsing($tab, $tab->getLocale());
+            $this->handleModifyTabsUsing($tab);
 
             /**
              * @var Field $field
              */
             foreach ($tab->getChildComponentContainer()->getComponents() as $field) {
-                $this->handleModifyFieldsUsing($field, $tab->getLocale());
+                $this->handleModifyFieldsUsing($tab, $field);
             }
         }
 
