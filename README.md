@@ -9,7 +9,9 @@ Automatically generate tabs for translations.
 
 This was created to be used with [spatie/laravel-translatable](https://github.com/spatie/laravel-translatable), but it can be used standalone as well.
 
-![Preview](./art/preview.gif)
+![Preview](./art/single-field-preview.gif)
+
+![Preview](./art/multiple-fields-preview.gif)
 
 ## Installation
 
