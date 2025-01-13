@@ -26,42 +26,26 @@ Then in any registered service provider `boot()` method configure the following:
 Configure default locales labels:
 
 ```php
-use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
-
-TranslatableTabs::configureLocalesLabelsUsing([
-    'ar' => 'Arabic',
-    'en' => 'English'
-    // It's better to have a locale file: 'ar' => __('localeFile.ar')
-]);
-```
-
-Configure default locales:
-
-```php
-use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
-
-TranslatableTabs::configureLocalesUsing([
-    'ar' ,
-    'en' 
-]);
+TranslatableTabs::configureUsing(function (TranslatableTabs $component) {
+    $component
+        // locales labels
+        ->localesLabels([
+            'ar' => __('locales.ar'),
+            'en' => __('locales.en')
+        ])
+        // default locales
+        ->locales(['ar', 'en']);
+});
 ```
 
 ## Usage
 
-### Single Field
-
 ```php
-use Filament\Forms\Components\TextInput;
-
+// Single Field
 TextInput::make('title')
     ->translatableTabs();
-```
 
-### Multiple Fields
-
-```php
-use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
-
+// Multiple Fields
 TranslatableTabs::make('anyLabel')
     ->schema([
         Forms\Components\TextInput::make("title"),
@@ -69,94 +53,85 @@ TranslatableTabs::make('anyLabel')
     ]);
 ```
 
-### Configurations (optionally)
+## Customizations
 
-#### Default
-
-In any registered service provider `boot()` method optionally configure the following:
+You can customize [`Tab`](https://filamentphp.com/docs/3.x/forms/layout/tabs) and [`Field`](https://filamentphp.com/docs/3.x/forms/fields/getting-started) based on locale using the following methods:
 
 ```php
 use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
-use Filament\Forms\Components\Tabs\Tab;
+use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTab;
 use Filament\Forms\Components\Field;
 
-TranslatableTabs::configureUsing(function (TranslatableTabs $component){
+$customizeTab = function (TranslatableTab $component, string $locale) {
     // ...
-});
+};
 
-TranslatableTabs::configureTabsUsing(function (Tab $component, $locale){
+$customizeField = function (Field $component, string $locale) {
     // ...
+};
+
+// Globally in boot method
+TranslatableTabs::configureUsing(function (TranslatableTabs $component) {
+    $component
+        ->modifyTabsUsing($customizeTab)
+        ->modifyFieldsUsing($customizeField);
 });
-
-TranslatableTabs::configureFieldsUsing(function (Field $component, $locale){
-    // ...
-});
-```
-
-#### Override the defaults:
-
-```php
-use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
-use Filament\Forms\Components\Field;
-use Filament\Forms\Components\Tabs\Tab;
-use Filament\Forms\Components\TextInput;
 
 // Single Field
 TextInput::make()
     ->translatableTabs(
-        locales: function () {
-            // you can override labels using : ['ar' => 'Arabic']
-            return ['ar', 'en']
-        },
-        modifyTabsUsing: function (Tab $component, $locale){
-            // ...
-        },
-        modifyFieldsUsing: function (Field $component, $locale){
-            // ...
-        } 
+        modifyTabsUsing: $customizeTab,
+        modifyFieldsUsing: $customizeField
     )
 
 // Multiple Fields
 TranslatableTabs::make('anyLabel')
-    ->locales(function () {
-        // you can override labels using : ['ar' => 'Arabic']
-        return ['ar', 'en']
-    })
-    ->modifyTabsUsing(function (Tab $component, $locale){
-        // ...
-    })
-    ->modifyFieldsUsing(function (Field $component, $locale){
-        // ...
-    })
+    ->modifyTabsUsing($customizeTab)
+    ->modifyFieldsUsing($customizeField)
+    ->schema([
+        Forms\Components\TextInput::make("title"),
+        Forms\Components\Textarea::make("content")
+    ]);
 ```
 
-### Suggested configurations
+#### Override the default locale:
+
+You can add the method `locale` to change it on the fly:
+
+```php
+$localesFn = function () {
+    return ['ar', 'en'];
+    
+    // also you can override label using:
+    return [
+        'ar' => 'Arabic',
+        'en' => 'English'
+    ]
+}
+// Single Field
+TextInput::make('title')
+    ->translatableTabs(locales: $localesFn);
+
+// Multiple Fields
+TranslatableTabs::make('anyLabel')
+    ->locales($localesFn)
+    ->schema([
+        Forms\Components\TextInput::make("title"),
+        Forms\Components\Textarea::make("content")
+    ]);
+```
+
+
+### Pre made configurations
 
 In order to have similar experience to the [preview](#filament-translatable-tabs) set the following:
 
 ```php
-use AbdulmajeedJamaan\FilamentTranslatableTabs\TranslatableTabs;
-use Filament\Forms\Components\Field;
-use Filament\Forms\Components\Tabs\Tab;
-
-
-TranslatableTabs::configureTabsUsing(function (Tab $component) {
-    $hasValue = fn ($tab, $get): bool => collect($tab->getChildComponents())
-        ->contains(fn($c) => !empty($get($c->getName())));
-
+TranslatableTabs::configureUsing(function (TranslatableTabs $component) {
     $component
-        ->live(onBlur: true)
-        ->badgeColor(function ($component, $get) use($hasValue) {
-            return $hasValue($component, $get) ? 'primary' : 'warning';
-        })
-        ->badge(function ($component, $get) use($hasValue) {
-            return $hasValue($component, $get) ? null : 'empty';
-        }));
-});
-
-TranslatableTabs::configureFieldsUsing(function (Field $component, $locale) {
-    $direction = str($locale)->startsWith('ar') ? 'rtl' : 'ltr'; 
-    $component->extraAttributes(['style' => "direction: $direction;"], merge: true);
+        ->addDirectionByLocale()
+        ->addEmptyBadgeWhenAllFieldsAreEmpty(emptyLabel: __('locales.empty'))
+        ->addSetActiveTabThatHasValue();
 });
 ```
 
