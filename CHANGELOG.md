@@ -2,6 +2,14 @@
 
 All notable changes to `filament-translatable-tabs` will be documented in this file.
 
+## v2.0.1 - 2025-01-13
+
+### What's Changed
+
+* Remove unused service provider methods by @Abdulmajeed-Jamaan in https://github.com/Abdulmajeed-Jamaan/filament-translatable-tabs/pull/4
+
+**Full Changelog**: https://github.com/Abdulmajeed-Jamaan/filament-translatable-tabs/compare/v2.0.0...v2.0.1
+
 ## v2.0.0 - 2025-01-12
 
 ### What's Changed
