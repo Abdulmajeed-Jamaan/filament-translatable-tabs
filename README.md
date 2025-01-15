@@ -23,8 +23,6 @@ composer require abdulmajeed-jamaan/filament-translatable-tabs
 
 Then in any registered service provider `boot()` method configure the following:
 
-Configure default locales labels:
-
 ```php
 TranslatableTabs::configureUsing(function (TranslatableTabs $component) {
     $component
