@@ -1,3 +1,5 @@
+> This package inspired by this [filament-translatable-fields](https://github.com/outer-web/filament-translatable-fields), but allowing filament like customizability on the `Tabs` and `Fields` components in context of each locale.
+
 # Filament Translatable Tabs
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/abdulmajeed-jamaan/filament-translatable-tabs.svg?style=flat-square)](https://packagist.org/packages/abdulmajeed-jamaan/filament-translatable-tabs)
@@ -77,10 +79,9 @@ TranslatableTabs::configureUsing(function (TranslatableTabs $component) {
 
 // Single Field
 TextInput::make()
-    ->translatableTabs(
-        modifyTabsUsing: $customizeTab,
-        modifyFieldsUsing: $customizeField
-    )
+    ->translatableTabs()
+    ->modifyTabsUsing($customizeTab)
+    ->modifyFieldsUsing($customizeField)
 
 // Multiple Fields
 TranslatableTabs::make('anyLabel')
@@ -108,7 +109,8 @@ $localesFn = function () {
 }
 // Single Field
 TextInput::make('title')
-    ->translatableTabs(locales: $localesFn);
+    ->translatableTabs()
+    ->locales($localesFn);
 
 // Multiple Fields
 TranslatableTabs::make('anyLabel')
