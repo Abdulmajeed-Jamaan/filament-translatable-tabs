@@ -47,7 +47,7 @@ trait HasExtraConfigs
             $activeTabsIndex = collect($component->getChildComponents())
                 ->search(fn ($tab) => $hasValue($tab, $get));
 
-            return $activeTabsIndex === false ? 0 : $activeTabsIndex + 1;
+            return $activeTabsIndex === false ? 1 : $activeTabsIndex + 1;
         });
 
         return $this;
