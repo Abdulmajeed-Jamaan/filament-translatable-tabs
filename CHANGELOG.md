@@ -2,6 +2,14 @@
 
 All notable changes to `filament-translatable-tabs` will be documented in this file.
 
+## v2.0.2 - 2025-01-17
+
+### What's Changed
+
+* fix: default active tab by @Abdulmajeed-Jamaan in https://github.com/Abdulmajeed-Jamaan/filament-translatable-tabs/pull/5
+
+**Full Changelog**: https://github.com/Abdulmajeed-Jamaan/filament-translatable-tabs/compare/v2.0.1...v2.0.2
+
 ## v2.0.1 - 2025-01-13
 
 ### What's Changed
