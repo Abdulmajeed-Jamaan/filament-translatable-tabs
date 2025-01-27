@@ -1,3 +1,4 @@
+> [!NOTE]
 > This package inspired by this [filament-translatable-fields](https://github.com/outer-web/filament-translatable-fields), but allowing filament like customizability on the `Tabs` and `Fields` components in context of each locale.
 
 # Filament Translatable Tabs
