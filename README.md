@@ -93,7 +93,7 @@ TranslatableTabs::make('anyLabel')
     ]);
 ```
 
-#### Override the default locale:
+#### Override the default locale
 
 You can add the method `locale` to change it on the fly:
 
