@@ -130,7 +130,7 @@ In order to have similar experience to the [preview](#filament-translatable-tabs
 TranslatableTabs::configureUsing(function (TranslatableTabs $component) {
     $component
         ->addDirectionByLocale()
-        ->addEmptyBadgeWhenAllFieldsAreEmpty(emptyLable: __('locales.empty'))
+        ->addEmptyBadgeWhenAllFieldsAreEmpty(emptyLabel: __('locales.empty'))
         ->addSetActiveTabThatHasValue();
 });
 ```

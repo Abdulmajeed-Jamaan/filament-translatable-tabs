@@ -16,16 +16,16 @@ trait HasExtraConfigs
         return $this;
     }
 
-    public function addEmptyBadgeWhenAllFieldsAreEmpty(string $emptyLable): static
+    public function addEmptyBadgeWhenAllFieldsAreEmpty(string $emptyLabel): static
     {
-        $this->modifyTabsUsing(function (TranslatableTab $component, string $locale) use ($emptyLable) {
+        $this->modifyTabsUsing(function (TranslatableTab $component, string $locale) use ($emptyLabel) {
             $hasValue = fn ($tab, $get): bool => collect($tab->getChildComponents())
                 ->contains(fn ($c) => ! empty($get($c->getName())));
 
             $component
                 ->live(true)
                 ->badgeColor(fn ($component, $get) => $hasValue($component, $get) ? null : 'warning')
-                ->badge(fn ($component, $get) => $hasValue($component, $get) ? null : $emptyLable);
+                ->badge(fn ($component, $get) => $hasValue($component, $get) ? null : $emptyLabel);
         });
 
         return $this;
