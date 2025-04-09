@@ -129,6 +129,7 @@ class TranslatableTabs extends Tabs
                 $field = $component
                     ->getClone()
                     ->name("{$component->getName()}.$locale")
+                    ->label($component->getLabel())
                     ->statePath("{$component->getStatePath(false)}.$locale");
 
                 $fields[] = $field;
