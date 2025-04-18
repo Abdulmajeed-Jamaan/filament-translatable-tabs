@@ -2,6 +2,18 @@
 
 All notable changes to `filament-translatable-tabs` will be documented in this file.
 
+## v3.0.1 - 2025-04-18
+
+### What's Changed
+
+* Fix: It Override Default Field Labels with Locale Keys When Label Not Explicitly Set by @khaled-sadek in https://github.com/Abdulmajeed-Jamaan/filament-translatable-tabs/pull/10
+
+### New Contributors
+
+* @khaled-sadek made their first contribution in https://github.com/Abdulmajeed-Jamaan/filament-translatable-tabs/pull/10
+
+**Full Changelog**: https://github.com/Abdulmajeed-Jamaan/filament-translatable-tabs/compare/v3.0.0...v3.0.1
+
 ## v3.0.0 - 2025-02-28
 
 ### What's Changed
