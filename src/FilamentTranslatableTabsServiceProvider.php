@@ -28,9 +28,8 @@ class FilamentTranslatableTabsServiceProvider extends PackageServiceProvider
             ?Closure $modifyTabsUsing = null,
             ?Closure $modifyFieldsUsing = null
         ) {
-            /**
-             * @var Field $this
-             */
+
+            /** @phpstan-ignore-next-line  */
             return TranslatableTabs::make($this->getLabel())
                 ->when(! is_null($locales), fn (TranslatableTabs $tabs) => $tabs->locales($locales))
                 ->when(! is_null($modifyTabsUsing), fn (TranslatableTabs $tabs) => $tabs->modifyTabsUsing($modifyTabsUsing))

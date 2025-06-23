@@ -111,7 +111,7 @@ class TranslatableTabs extends Tabs
     public function getDefaultChildComponents(): array
     {
         /**
-         * @var array<Field> $components
+         * @var array $components
          */
         $components = parent::getDefaultChildComponents();
 
