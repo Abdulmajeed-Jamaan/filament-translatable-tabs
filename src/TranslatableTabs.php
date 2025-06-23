@@ -2,10 +2,10 @@
 
 namespace AbdulmajeedJamaan\FilamentTranslatableTabs;
 
-use Filament\Schemas\Components\Tabs;
-use Filament\Schemas\Schema;
 use Closure;
 use Filament\Forms\Components\Field;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Schema;
 use http\Exception\RuntimeException;
 
 class TranslatableTabs extends Tabs
