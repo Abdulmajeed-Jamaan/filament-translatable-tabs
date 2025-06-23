@@ -2,11 +2,10 @@
 
 namespace AbdulmajeedJamaan\FilamentTranslatableTabs;
 
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Schema;
 use Closure;
-use Filament\Forms\ComponentContainer;
-use Filament\Forms\Components\Component;
 use Filament\Forms\Components\Field;
-use Filament\Forms\Components\Tabs;
 use http\Exception\RuntimeException;
 
 class TranslatableTabs extends Tabs
@@ -107,14 +106,14 @@ class TranslatableTabs extends Tabs
     }
 
     /**
-     * @return array<Component>
+     * @return array<\Filament\Schemas\Components\Component>
      */
-    public function getChildComponents(): array
+    public function getDefaultChildComponents(): array
     {
         /**
          * @var array<Field> $components
          */
-        $components = parent::getChildComponents();
+        $components = parent::getDefaultChildComponents();
 
         if (collect($components)->contains(fn ($component) => ! $component instanceof Field)) {
             throw new RuntimeException('Only instances of type ' . Field::class . ' Supported');
@@ -145,10 +144,9 @@ class TranslatableTabs extends Tabs
         return $tabs;
     }
 
-    public function getChildComponentContainer($key = null): ComponentContainer
+    public function getChildSchema($key = null): Schema
     {
-        $componentContainer = parent::getChildComponentContainer($key);
-
+        $componentContainer = parent::getChildSchema($key);
         /**
          * @var TranslatableTab $tab
          */
@@ -158,7 +156,7 @@ class TranslatableTabs extends Tabs
             /**
              * @var Field $field
              */
-            foreach ($tab->getChildComponentContainer()->getComponents() as $field) {
+            foreach ($tab->getChildSchema()->getComponents() as $field) {
                 $this->handleModifyFieldsUsing($tab, $field);
             }
         }

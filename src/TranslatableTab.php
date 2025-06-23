@@ -2,7 +2,7 @@
 
 namespace AbdulmajeedJamaan\FilamentTranslatableTabs;
 
-use Filament\Forms\Components\Tabs\Tab;
+use Filament\Schemas\Components\Tabs\Tab;
 
 class TranslatableTab extends Tab
 {
