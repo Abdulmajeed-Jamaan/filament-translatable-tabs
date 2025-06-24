@@ -15,6 +15,13 @@ Works seamlessly with [spatie/laravel-translatable](https://github.com/spatie/la
 
 ![Preview](./art/multiple-fields-preview.gif)
 
+### Supported Filament versions
+
+| Filament Version | Filament Translatable Tabs Version |
+|------------------|------------------------------------|
+| ^3.x             | ^3.x                               |
+| ^4.x             | ^4.x                               |
+
 ## Installation
 
 You can install the package via composer:
