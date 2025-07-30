@@ -6,7 +6,7 @@ use Closure;
 use Filament\Forms\Components\Field;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Schema;
-use http\Exception\RuntimeException;
+use RuntimeException;
 
 class TranslatableTabs extends Tabs
 {
