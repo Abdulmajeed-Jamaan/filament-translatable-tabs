@@ -7,7 +7,7 @@ use Filament\Forms\ComponentContainer;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Components\Tabs;
-use http\Exception\RuntimeException;
+use RuntimeException;
 
 class TranslatableTabs extends Tabs
 {
