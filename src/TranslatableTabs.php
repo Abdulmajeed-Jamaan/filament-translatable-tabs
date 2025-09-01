@@ -158,6 +158,7 @@ class TranslatableTabs extends Tabs
              */
             foreach ($tab->getChildSchema()->getComponents() as $field) {
                 $this->handleModifyFieldsUsing($tab, $field);
+                $field->label($field->getLabel() . " ({$tab->getLocale()})");
             }
         }
 
