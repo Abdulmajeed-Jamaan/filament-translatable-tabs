@@ -142,6 +142,21 @@ TranslatableTabs::configureUsing(function (TranslatableTabs $component) {
 });
 ```
 
+### Rich Editor support
+
+When the `Filament\Forms\Components\RichEditor` field is empty it actually still contains a `<p></p>` tag.
+To make TranslatableTabs consider this condition as an empty field, and to save the empty value/translation to the database as `null`, add `addConvertRichEditorEmptyPTagToNull()` to `configureUsing`.
+
+
+```php
+TranslatableTabs::configureUsing(function (TranslatableTabs $component) {
+    $component
+        ->addDirectionByLocale()
+        ->addEmptyBadgeWhenAllFieldsAreEmpty(emptyLabel: __('locales.empty'))
+        ->addSetActiveTabThatHasValue()
+        ->addConvertRichEditorEmptyPTagToNull();
+});
+```
 
 ## Changelog
 

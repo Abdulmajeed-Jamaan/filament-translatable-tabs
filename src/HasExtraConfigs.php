@@ -3,9 +3,13 @@
 namespace AbdulmajeedJamaan\FilamentTranslatableTabs;
 
 use Filament\Forms\Components\Field;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\RichEditor\RichContentRenderer;
 
 trait HasExtraConfigs
 {
+    private bool $handleRichEditor = false;
+
     public function addDirectionByLocale(): static
     {
         $this->modifyFieldsUsing(function (Field $component, string $locale) {
@@ -16,11 +20,32 @@ trait HasExtraConfigs
         return $this;
     }
 
+    public function addConvertRichEditorEmptyPTagToNull(): static
+    {
+        $this->handleRichEditor = true;
+
+        $this->modifyFieldsUsing(function (Field $component, string $locale) {
+            if ($component instanceof RichEditor) {
+                $component->dehydrateStateUsing(function ($state) {
+                    return $state == '<p></p>' ? null : $state;
+                });
+            }
+        });
+
+        return $this;
+    }
+
     public function addEmptyBadgeWhenAllFieldsAreEmpty(string $emptyLabel): static
     {
         $this->modifyTabsUsing(function (TranslatableTab $component, string $locale) use ($emptyLabel) {
             $hasValue = fn ($tab, $get): bool => collect($tab->getChildComponents())
-                ->contains(fn ($c) => ! empty($get($c->getName())));
+                ->contains(function ($c) use ($get) {
+                    $content = $get($c->getName());
+                    if ($this->handleRichEditor && $c instanceof RichEditor) {
+                        return $content != '<p></p>';
+                    }
+                    return ! empty($content);
+                });
 
             $component
                 ->live(true)
@@ -36,7 +61,13 @@ trait HasExtraConfigs
         $this->activeTab(function ($get, $component) {
             $hasValue = function ($tab, $get): bool {
                 foreach ($tab->getChildComponents() as $component) {
-                    if (! empty($get($component->getName()))) {
+                    $content = $get($component->getName());
+                    if ($this->handleRichEditor && $component instanceof RichEditor) {
+                        $html = RichContentRenderer::make($content)->toHtml();
+                        if ($html != '<p></p>') {
+                            return true;
+                        }
+                    } else if (! empty($content)) {
                         return true;
                     }
                 }
