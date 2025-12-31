@@ -15,7 +15,7 @@ class TranslatableTabs extends Tabs
     /**
      * @var array<string, string>|Closure(): array<string, string>
      */
-    protected array | Closure $localeLabels;
+    protected array | Closure $localeLabels = [];
 
     /**
      * @var array<string|int, string>|Closure(): array<string|int, string>

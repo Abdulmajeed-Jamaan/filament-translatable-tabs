@@ -4,9 +4,10 @@ namespace AbdulmajeedJamaan\FilamentTranslatableTabs;
 
 use Closure;
 use Filament\Forms\Components\Field;
-use Spatie\LaravelPackageTools\Commands\InstallCommand;
+use Filament\Forms\Components\Repeater;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Spatie\LaravelPackageTools\Commands\InstallCommand;
 
 class FilamentTranslatableTabsServiceProvider extends PackageServiceProvider
 {
@@ -28,6 +29,9 @@ class FilamentTranslatableTabsServiceProvider extends PackageServiceProvider
             ?Closure $modifyTabsUsing = null,
             ?Closure $modifyFieldsUsing = null
         ) {
+            if ($this instanceof Repeater) {
+                return new TranslatableTabsProxy($this, $locales, $modifyTabsUsing, $modifyFieldsUsing);
+            }
 
             /** @phpstan-ignore-next-line  */
             return TranslatableTabs::make($this->getLabel())
