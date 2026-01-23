@@ -21,6 +21,7 @@ Works seamlessly with [spatie/laravel-translatable](https://github.com/spatie/la
 |------------------|------------------------------------|
 | ^3.x             | ^3.x                               |
 | ^4.x             | ^4.x                               |
+| ^5.x             | ^5.x                               |
 
 ## Installation
 
