@@ -22,7 +22,7 @@
         }
     ],
     "require": {
-        "filament/forms": "^4.0",
+        "filament/forms": "^4.0|^5.0",
         "spatie/laravel-package-tools": "^1.15.0"
     },
     "require-dev": {

@@ -6,7 +6,7 @@ use Filament\Schemas\Components\Tabs\Tab;
 
 class TranslatableTab extends Tab
 {
-    protected string $locale;
+    protected ?string $locale = null;
 
     public function locale(string $locale): static
     {
@@ -15,7 +15,7 @@ class TranslatableTab extends Tab
         return $this;
     }
 
-    public function getLocale(): string
+    public function getLocale(): ?string
     {
         return $this->locale;
     }
