@@ -1,5 +1,5 @@
 {
-    "name": "abdulmajeed-jamaan/filament-translatable-tabs",
+    "name": "eg-mohamed/filament-translatable-tabs",
     "description": "Simplifying managing json based translation columns using tabs",
     "keywords": [
         "Abdulmajeed-Jamaan",
@@ -8,10 +8,10 @@
         "translation",
         "filament-translatable-tabs"
     ],
-    "homepage": "https://github.com/abdulmajeed-jamaan/filament-translatable-tabs",
+    "homepage": "https://github.com/eg-mohamed/filament-translatable-tabs",
     "support": {
-        "issues": "https://github.com/abdulmajeed-jamaan/filament-translatable-tabs/issues",
-        "source": "https://github.com/abdulmajeed-jamaan/filament-translatable-tabs"
+        "issues": "https://github.com/eg-mohamed/filament-translatable-tabs/issues",
+        "source": "https://github.com/eg-mohamed/filament-translatable-tabs"
     },
     "license": "MIT",
     "authors": [
@@ -19,10 +19,15 @@
             "name": "Abdulmajeed-Jamaan",
             "email": "abdulmajeed.jamaan@outlook.com",
             "role": "Developer"
+        },
+        {
+            "name": "Mohamed Said",
+            "email": "me@msaied.com",
+            "role": "Developer"
         }
     ],
     "require": {
-        "filament/forms": "^4.0",
+        "filament/forms": "^4.0|^5.0",
         "spatie/laravel-package-tools": "^1.15.0"
     },
     "require-dev": {
