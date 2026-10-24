@@ -30,7 +30,7 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
-            ->discoverResources(in: __DIR__ . '/../../Filament/Resources', for: 'Workbench\\App\\Filament\\Resources')
+            ->discoverResources(in: __DIR__.'/../../Filament/Resources', for: 'Workbench\\App\\Filament\\Resources')
             ->pages([
                 Dashboard::class,
             ])
