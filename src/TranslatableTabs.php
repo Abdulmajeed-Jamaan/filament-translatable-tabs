@@ -8,6 +8,7 @@ use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Schema;
 use RuntimeException;
+use SplObjectStorage;
 
 class TranslatableTabs extends Tabs
 {
@@ -32,6 +33,11 @@ class TranslatableTabs extends Tabs
      * @var array<Closure>
      */
     protected array $modifyFieldsUsing = [];
+
+    /**
+     * @var SplObjectStorage<Component, true>|null
+     */
+    protected ?SplObjectStorage $modifiedComponents = null;
 
     /**
      * @param  array<string, string>|Closure(): array<string, string>  $localesLabels
@@ -92,8 +98,25 @@ class TranslatableTabs extends Tabs
         return $this;
     }
 
+    protected function hasAlreadyModified(Component $component): bool
+    {
+        $this->modifiedComponents ??= new SplObjectStorage;
+
+        if ($this->modifiedComponents->contains($component)) {
+            return true;
+        }
+
+        $this->modifiedComponents->attach($component);
+
+        return false;
+    }
+
     public function handleModifyTabsUsing(TranslatableTab $tab): void
     {
+        if ($this->hasAlreadyModified($tab)) {
+            return;
+        }
+
         foreach ($this->modifyTabsUsing as $closure) {
             $tab->evaluate($closure, ['locale' => $tab->getLocale()]);
         }
@@ -101,6 +124,10 @@ class TranslatableTabs extends Tabs
 
     public function handleModifyFieldsUsing(TranslatableTab $tab, Field $field): void
     {
+        if ($this->hasAlreadyModified($field)) {
+            return;
+        }
+
         foreach ($this->modifyFieldsUsing as $closure) {
             $field->evaluate($closure, ['locale' => $tab->getLocale()]);
         }
@@ -115,6 +142,10 @@ class TranslatableTabs extends Tabs
          * @var array $components
          */
         $components = parent::getDefaultChildComponents();
+
+        if (filled($components) && collect($components)->every(fn ($component) => $component instanceof TranslatableTab)) {
+            return $components;
+        }
 
         if (collect($components)->contains(fn ($component) => ! $component instanceof Field)) {
             throw new RuntimeException('Only instances of type ' . Field::class . ' Supported');

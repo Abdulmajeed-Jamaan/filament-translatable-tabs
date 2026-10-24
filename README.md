@@ -28,7 +28,7 @@ Works seamlessly with [spatie/laravel-translatable](https://github.com/spatie/la
 You can install the package via composer:
 
 ```bash
-composer require abdulmajeed-jamaan/filament-translatable-tabs
+composer require eg-mohamed/filament-translatable-tabs
 ```
 
 Then in any registered service provider `boot()` method configure the following:
