@@ -153,7 +153,7 @@ composer install
 composer serve
 ```
 
-This builds the app (SQLite database, migrations, seed data, Filament assets) and opens the panel at `/admin`. The login form is prefilled with the seeded user (`test@example.com` / `password`).
+This builds the app (SQLite database, migrations, seed data, Filament assets) and starts a server. Opening it logs you in as the seeded user (`test@example.com` / `password`) and redirects you to the edit form of a translated post.
 
 Run the tests with `composer test`.
 
