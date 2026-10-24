@@ -59,7 +59,7 @@ it('stores each locale under the field state path', function () {
                 'en' => 'Hello',
             ],
         ])
-        ->assertFormSet([
+        ->assertSchemaStateSet([
             'title.ar' => 'مرحبا',
             'title.en' => 'Hello',
         ])
@@ -74,7 +74,7 @@ it('fills existing translations into each tab', function () {
         fn () => [TextInput::make('title')->translatableTabs()],
         ['title' => ['ar' => 'مرحبا', 'en' => 'Hello']],
     )
-        ->assertFormSet([
+        ->assertSchemaStateSet([
             'title.ar' => 'مرحبا',
             'title.en' => 'Hello',
         ]);
