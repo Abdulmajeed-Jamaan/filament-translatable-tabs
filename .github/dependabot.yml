@@ -17,15 +17,11 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-    cooldown:
-      default-days: 7
-    labels:
-      - "dependencies"
-
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "weekly"
+    versioning-strategy: widen
+    ignore:
+      # A new Filament major gets its own branch
+      - dependency-name: "filament/*"
+        update-types: ["version-update:semver-major"]
     cooldown:
       default-days: 7
     labels:
@@ -33,7 +29,7 @@ updates:
 
   - package-ecosystem: "github-actions"
     directory: "/"
-    target-branch: "5.x"
+    target-branch: "4.x"
     schedule:
       interval: "weekly"
     cooldown:
@@ -43,19 +39,14 @@ updates:
 
   - package-ecosystem: "composer"
     directory: "/"
-    target-branch: "5.x"
+    target-branch: "4.x"
     schedule:
       interval: "weekly"
-    cooldown:
-      default-days: 7
-    labels:
-      - "dependencies"
-
-  - package-ecosystem: "npm"
-    directory: "/"
-    target-branch: "5.x"
-    schedule:
-      interval: "weekly"
+    versioning-strategy: widen
+    ignore:
+      # Maintenance branch: minor and patch updates only
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     cooldown:
       default-days: 7
     labels:
