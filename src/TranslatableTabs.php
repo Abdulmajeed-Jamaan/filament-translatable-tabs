@@ -4,6 +4,7 @@ namespace AbdulmajeedJamaan\FilamentTranslatableTabs;
 
 use Closure;
 use Filament\Forms\Components\Field;
+use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Schema;
 use RuntimeException;
@@ -106,7 +107,7 @@ class TranslatableTabs extends Tabs
     }
 
     /**
-     * @return array<\Filament\Schemas\Components\Component>
+     * @return array<Component>
      */
     public function getDefaultChildComponents(): array
     {
