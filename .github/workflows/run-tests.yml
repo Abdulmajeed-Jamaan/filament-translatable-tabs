@@ -2,9 +2,9 @@ name: run-tests
 
 on:
   push:
-    branches: [4.x]
+    branches: [5.x]
   pull_request:
-    branches: [4.x]
+    branches: [5.x]
 
 jobs:
   test:
@@ -14,11 +14,11 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         php: [8.2]
-        laravel: [11.*]
+        laravel: [12.*]
         stability: [prefer-lowest, prefer-stable]
         include:
-          - laravel: 11.*
-            testbench: 9.*
+          - laravel: 12.*
+            testbench: 10.*
             carbon: 3.*
 
     name: P${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }} - ${{ matrix.os }}
