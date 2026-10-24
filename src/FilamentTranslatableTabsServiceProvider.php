@@ -24,7 +24,7 @@ class FilamentTranslatableTabsServiceProvider extends PackageServiceProvider
     public function packageBooted(): void
     {
         Field::macro('translatableTabs', function (
-            Closure | array | null $locales = null,
+            Closure|array|null $locales = null,
             ?Closure $modifyTabsUsing = null,
             ?Closure $modifyFieldsUsing = null
         ) {
