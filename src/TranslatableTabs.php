@@ -16,12 +16,12 @@ class TranslatableTabs extends Tabs
     /**
      * @var array<string, string>|Closure(): array<string, string>
      */
-    protected array | Closure $localeLabels;
+    protected array|Closure $localeLabels;
 
     /**
      * @var array<string|int, string>|Closure(): array<string|int, string>
      */
-    protected array | Closure $locales;
+    protected array|Closure $locales;
 
     /**
      * @var array<Closure>
@@ -36,7 +36,7 @@ class TranslatableTabs extends Tabs
     /**
      * @param  array<string, string>|Closure(): array<string, string>  $localesLabels
      */
-    public function localesLabels(array | Closure $localesLabels): static
+    public function localesLabels(array|Closure $localesLabels): static
     {
         $this->localeLabels = $localesLabels;
 
@@ -47,7 +47,7 @@ class TranslatableTabs extends Tabs
      * @param  array<string|int, string>|Closure(): array<string|int, string>  $locales
      * @return $this
      */
-    public function locales(array | Closure $locales): static
+    public function locales(array|Closure $locales): static
     {
         $this->locales = $locales;
 
@@ -117,7 +117,7 @@ class TranslatableTabs extends Tabs
         $components = parent::getDefaultChildComponents();
 
         if (collect($components)->contains(fn ($component) => ! $component instanceof Field)) {
-            throw new RuntimeException('Only instances of type ' . Field::class . ' Supported');
+            throw new RuntimeException('Only instances of type '.Field::class.' Supported');
         }
 
         $tabs = [];
