@@ -144,6 +144,19 @@ TranslatableTabs::configureUsing(function (TranslatableTabs $component) {
 ```
 
 
+## Local development
+
+The repository includes a [Workbench](https://packages.tools/workbench) app: a Filament panel with a `Post` resource that uses translatable tabs, for trying changes in the browser.
+
+```bash
+composer install
+composer serve
+```
+
+This builds the app (SQLite database, migrations, seed data, Filament assets) and starts a server. Opening it logs you in as the seeded user (`test@example.com` / `password`) and redirects you to the edit form of a translated post.
+
+Run the tests with `composer test`.
+
 ## Changelog
 
 Please see [Releases](../../releases) for more information on what has changed recently.
